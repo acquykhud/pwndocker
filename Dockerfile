@@ -45,6 +45,9 @@ RUN dpkg --add-architecture i386 && \
     zstd \
     tzdata --fix-missing \
     nano \
+    htop \
+    pypy3 \
+    pypy3-dev \
     wget && \
     rm -rf /var/lib/apt/list/*
 
@@ -56,8 +59,8 @@ RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
 RUN wget https://github.com/radareorg/radare2/releases/download/4.4.0/radare2_4.4.0_amd64.deb && \
     dpkg -i radare2_4.4.0_amd64.deb && rm radare2_4.4.0_amd64.deb
 
-RUN python3 -m pip install -U pip && \
-    python3 -m pip install --no-cache-dir \
+RUN pypy3 -m pip install -U pip && \
+    pypy3 -m pip install --no-cache-dir \
     angr \
     ropgadget \
     pwntools \
