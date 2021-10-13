@@ -48,6 +48,7 @@ RUN dpkg --add-architecture i386 && \
     htop \
     pypy3 \
     pypy3-dev \
+    virtualenv \
     wget && \
     rm -rf /var/lib/apt/list/*
 
@@ -59,8 +60,8 @@ RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
 RUN wget https://github.com/radareorg/radare2/releases/download/4.4.0/radare2_4.4.0_amd64.deb && \
     dpkg -i radare2_4.4.0_amd64.deb && rm radare2_4.4.0_amd64.deb
 
-RUN pypy3 -m pip install -U pip && \
-    pypy3 -m pip install --no-cache-dir \
+RUN python3 -m pip install -U pip && \
+    python3 -m pip install --no-cache-dir \
     angr \
     ropgadget \
     pwntools \
@@ -75,6 +76,17 @@ RUN pypy3 -m pip install -U pip && \
     pebble \
     jupyterlab \
     r2pipe
+
+RUN virtualenv /pypy3 --python=/usr/bin/pypy3
+
+RUN /pypy3/bin/pypy3 -m pip install -U pip && \
+    /pypy3/bin/pypy3 -m pip install --no-cache-dir \
+    angr \
+    z3-solver \
+    pwntools
+
+RUN python3 -m pip install -U pwntools
+RUN /pypy3/bin/pypy3 -m pip install -U pwntools
 
 RUN gem install one_gadget seccomp-tools && rm -rf /var/lib/gems/2.*/cache/*
 
