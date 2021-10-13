@@ -81,6 +81,7 @@ RUN virtualenv /pypy3 --python=/usr/bin/pypy3
 
 RUN /pypy3/bin/pypy3 -m pip install -U pip && \
     /pypy3/bin/pypy3 -m pip install --no-cache-dir \
+    ipykernel \
     angr \
     z3-solver \
     pwntools
